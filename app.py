@@ -1,19 +1,19 @@
 import datetime
 import random
 
-import bokeh
-import bokeh.layouts
-import bokeh.models
-import bokeh.plotting
+# import bokeh
+# import bokeh.layouts
+# import bokeh.models
+# import bokeh.plotting
 import markdown
-import pandas as pd
+# import pandas as pd
 import streamlit as st
 
 import requests
 
 import torch
 from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
-import umap
+# import umap
 
 tokenizer = AutoTokenizer.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2") 
 model = AutoModelForQuestionAnswering.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2")

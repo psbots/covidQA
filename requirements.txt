@@ -1,7 +1,5 @@
 streamlit==0.58.0
-pandas
 transformers
-bokeh
 requests
-torch
-umap-learn
+# torch
+# umap-learn
