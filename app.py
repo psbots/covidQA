@@ -15,9 +15,9 @@ import torch
 from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
 # import umap
 
-tokenizer = AutoTokenizer.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2") 
-model = AutoModelForQuestionAnswering.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2")
-model.eval()
+# tokenizer = AutoTokenizer.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2") 
+# model = AutoModelForQuestionAnswering.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2")
+# model.eval()
 # url = "https://cord-19.apps.allenai.org/api/meta/search"
 url = "https://api.cord19.vespa.ai/search/"
 payload = {"query":"+(",
