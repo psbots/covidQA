@@ -147,7 +147,7 @@ if search_text:
     # st.write(payload["query"])
     response = requests.request("GET", url, headers=headers, params = payload)
     result = response.json()
-    st.write(result)
+    # st.write(result)
     for hit in result["root"]["children"]:
         st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
         st.write(hit["fields"]["abstract-full"].replace("<hi>","<i><b>").replace("</hi>","</i></b>"),unsafe_allow_html=True)
