@@ -3,5 +3,5 @@ pandas
 transformers
 bokeh
 requests
-pytorch
+torch
 umap-learn
