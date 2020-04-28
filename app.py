@@ -11,8 +11,8 @@ import streamlit as st
 
 import requests
 
-import torch
-from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
+# import torch
+# from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
 # import umap
 
 # tokenizer = AutoTokenizer.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2") 
