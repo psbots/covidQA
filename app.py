@@ -149,12 +149,12 @@ if search_text:
     result = response.json()
     st.write(result)
     for hit in result["root"]["children"]:
-        # st.text(hit["fields"]["title-full"])
-        # st.write(hit["fields"]["abstract-full"].replace("<hi>","<i><b>").replace("</hi>","</i></b>"),unsafe_allow_html=True)
+        st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
+        st.write(hit["fields"]["abstract-full"].replace("<hi>","<i><b>").replace("</hi>","</i></b>"),unsafe_allow_html=True)
         # st.write(hit["fields"]["body_text-full"],unsafe_allow_html=True)
-        body_text = hit["fields"].get("body_text-full", None)
-        if body_text:
-            st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
-            ans,short = answer_question(search_text,body_text)
-            st.write("Answer : "+"<i><u>"+short+"</u></i>",unsafe_allow_html=True)
-            st.write(ans,unsafe_allow_html=True)
+        # body_text = hit["fields"].get("body_text-full", None)
+        # if body_text:
+        #     st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
+        #     ans,short = answer_question(search_text,body_text)
+        #     st.write("Answer : "+"<i><u>"+short+"</u></i>",unsafe_allow_html=True)
+        #     st.write(ans,unsafe_allow_html=True)
