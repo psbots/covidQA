@@ -1,6 +1,6 @@
 streamlit==0.58.0
 transformers
 requests
-torch==1.5.0+cpu
+torch-cpu
 umap-learn
 bokeh
