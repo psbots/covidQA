@@ -11,13 +11,16 @@ import streamlit as st
 
 import requests
 
-# import torch
-# from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
+import torch
+from transformers import BertForQuestionAnswering,BertTokenizer, BertModel, AutoTokenizer, AutoModelForQuestionAnswering
 # import umap
+@st.cache(allow_output_mutation=True)
+def load_model():
+    tokenizer = AutoTokenizer.from_pretrained("monologg/biobert_v1.1_pubmed") #ktrapeznikov/biobert_v1.1_pubmed_squad_v2
+    model = AutoModelForQuestionAnswering.from_pretrained("monologg/biobert_v1.1_pubmed")
+    model.eval()
+    return tokenizer, model
 
-# tokenizer = AutoTokenizer.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2") 
-# model = AutoModelForQuestionAnswering.from_pretrained("ktrapeznikov/biobert_v1.1_pubmed_squad_v2")
-# model.eval()
 # url = "https://cord-19.apps.allenai.org/api/meta/search"
 url = "https://api.cord19.vespa.ai/search/"
 payload = {"query":"+(",
@@ -57,7 +60,7 @@ class Format:
     end = '</b>'
     underline = '<b>'
 
-def answer_question(question, answer_text):
+def answer_question(question, answer_text, tokenizer, model):
     '''
     Takes a `question` string and an `answer_text` string (which contains the
     answer), and identifies the words within the `answer_text` that are the
@@ -140,21 +143,24 @@ search_request_any = {
 }
 endpoint='https://api.cord19.vespa.ai/search/'
 
-search_text = st.text_input("Ask your question related to COVID19")
 
-if search_text:
-    payload["query"] = payload["query"] + '"' + '" "'.join(search_text.split(" ")) + '")'
-    # st.write(payload["query"])
-    response = requests.request("GET", url, headers=headers, params = payload)
-    result = response.json()
-    # st.write(result)
-    for hit in result["root"]["children"]:
-        st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
-        st.write(hit["fields"]["abstract-full"].replace("<hi>","<i><b>").replace("</hi>","</i></b>"),unsafe_allow_html=True)
-        # st.write(hit["fields"]["body_text-full"],unsafe_allow_html=True)
-        # body_text = hit["fields"].get("body_text-full", None)
-        # if body_text:
-        #     st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
-        #     ans,short = answer_question(search_text,body_text)
-        #     st.write("Answer : "+"<i><u>"+short+"</u></i>",unsafe_allow_html=True)
-        #     st.write(ans,unsafe_allow_html=True)
+if __name__ == "__main__":
+    tokenizer, model = load_model()
+    search_text = st.text_input("Ask your question related to COVID19")
+
+    if search_text:
+        payload["query"] = payload["query"] + '"' + '" "'.join(search_text.split(" ")) + '")'
+        # st.write(payload["query"])
+        response = requests.request("GET", url, headers=headers, params = payload)
+        result = response.json()
+        # st.write(result)
+        for hit in result["root"]["children"]:
+            # st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
+            # st.write(hit["fields"]["abstract-full"].replace("<hi>","<i><b>").replace("</hi>","</i></b>"),unsafe_allow_html=True)
+            # st.write(hit["fields"]["body_text-full"],unsafe_allow_html=True)
+            body_text = hit["fields"].get("body_text-full", None)
+            if body_text:
+                st.write("<b>"+hit["fields"]["title-full"]+"</b>",unsafe_allow_html=True)
+                ans,short = answer_question(search_text,body_text,tokenizer, model)
+                st.write("Answer : "+"<i><u>"+short+"</u></i>",unsafe_allow_html=True)
+                st.write(ans,unsafe_allow_html=True)
